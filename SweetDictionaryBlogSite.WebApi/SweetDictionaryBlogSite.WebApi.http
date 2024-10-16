@@ -1,0 +1,6 @@
+@SweetDictionaryBlogSite.WebApi_HostAddress = http://localhost:5157
+
+GET {{SweetDictionaryBlogSite.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
