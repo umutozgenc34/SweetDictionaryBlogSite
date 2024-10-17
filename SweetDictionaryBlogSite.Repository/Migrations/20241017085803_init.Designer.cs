@@ -12,7 +12,7 @@ using SweetDictionaryBlogSite.Repository.Context;
 namespace SweetDictionaryBlogSite.Repository.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20241017083054_init")]
+    [Migration("20241017085803_init")]
     partial class init
     {
         /// <inheritdoc />

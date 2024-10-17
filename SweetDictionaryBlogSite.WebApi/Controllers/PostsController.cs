@@ -7,9 +7,9 @@ namespace SweetDictionaryBlogSite.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PostsController(IPostService postService) : ControllerBase
+public class PostsController(IPostService _postService) : ControllerBase
 {
-    private readonly IPostService _postService;
+
 
     [HttpGet("getall")]
     public IActionResult GetAll()
