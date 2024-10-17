@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SweetDictionaryBlogSite.Repository.Context;
 using SweetDictionaryBlogSite.Repository.Repositories.Abstracts;
 using SweetDictionaryBlogSite.Repository.Repositories.Concretes;
@@ -13,7 +14,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<IPostRepository,EfPostRepository>();
-builder.Services.AddDbContext<BaseDbContext>();
+builder.Services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon")));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
