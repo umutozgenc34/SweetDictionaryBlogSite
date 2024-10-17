@@ -10,7 +10,7 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<CreatePostRequestDto,Post>().ReverseMap();
+        CreateMap<CreatePostRequestDto,Post>();
         CreateMap<Post, PostResponseDto>();
     }
 }

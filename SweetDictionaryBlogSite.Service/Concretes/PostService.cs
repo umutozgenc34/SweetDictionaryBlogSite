@@ -40,11 +40,30 @@ public sealed class PostService : IPostService
 
     public ReturnModel<List<PostResponseDto>> GetAll()
     {
-        throw new NotImplementedException();
+        var posts = _postRepository.GetAll();
+        List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
+        return new ReturnModel<List<PostResponseDto>>
+        {
+            Data = responses,
+            Message = string.Empty,
+            Status = 200,
+            Success = true
+
+        };
+
     }
 
     public ReturnModel<PostResponseDto> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        var post = _postRepository.GetById(id);
+        PostResponseDto response = _mapper.Map<PostResponseDto>(post);
+        return new ReturnModel<PostResponseDto>
+        {
+            Data = response,
+            Message = "İlgili post gösterildi",
+            Status = 200,
+            Success = true
+        };
+            
     }
 }
