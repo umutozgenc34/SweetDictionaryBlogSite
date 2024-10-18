@@ -38,6 +38,20 @@ public sealed class PostService : IPostService
         };
     }
 
+    public ReturnModel<string> Delete(Guid id)
+    {
+        Post? post = _postRepository.GetById(id);
+        Post deletedPost = _postRepository.Delete(post);
+
+        return new ReturnModel<string>
+        {
+            Data = $"Post Başlığı : {deletedPost.Title}",
+            Message = "Post silindi",
+            Status = 204,
+            Success = true
+        };
+    }
+
     public ReturnModel<List<PostResponseDto>> GetAll()
     {
         var posts = _postRepository.GetAll();
@@ -53,6 +67,49 @@ public sealed class PostService : IPostService
 
     }
 
+    public ReturnModel<List<PostResponseDto>> GetAllByAuthorId(long authorId)
+    {
+        List<Post> posts = _postRepository.GetAllByAuthorId(authorId);
+        List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
+
+        return new ReturnModel<List<PostResponseDto>>
+        {
+            Data = responses,
+            Message = $"Yazar Idsine göre Postlar Listelendi : Yazar Id: {authorId}",
+            Status = 200,
+            Success = true
+        };
+    }
+
+    public ReturnModel<List<PostResponseDto>> GetAllByCategoryId(int categoryId)
+    {
+        List<Post> posts = _postRepository.GetAllByCategoryId(categoryId);
+        List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
+
+        return new ReturnModel<List<PostResponseDto>>
+        {
+            Data = responses,
+            Message = $"CategoryIdsine göre Postlar Listelendi : Yazar Id: {categoryId}",
+            Status = 200,
+            Success = true
+        };
+
+    }
+
+    public ReturnModel<List<PostResponseDto>> GetAllByTitleContains(string text)
+    {
+        List<Post> posts = _postRepository.GetAllByTitleContains(text);
+        List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
+
+        return new ReturnModel<List<PostResponseDto>>
+        {
+            Data = responses,
+            Message = string.Empty,
+            Status = 200,
+            Success = true
+        };
+    }
+
     public ReturnModel<PostResponseDto> GetById(Guid id)
     {
         var post = _postRepository.GetById(id);
@@ -65,5 +122,10 @@ public sealed class PostService : IPostService
             Success = true
         };
             
+    }
+
+    public ReturnModel<PostResponseDto> Update(UpdatePostRequestDto dto)
+    {
+        throw new NotImplementedException();
     }
 }
