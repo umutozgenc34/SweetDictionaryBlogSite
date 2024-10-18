@@ -5,6 +5,7 @@ using SweetDictionaryBlogSite.Repository.Repositories.Concretes;
 using SweetDictionaryBlogSite.Service.Abstracts;
 using SweetDictionaryBlogSite.Service.Concretes;
 using SweetDictionaryBlogSite.Service.Mappings;
+using SweetDictionaryBlogSite.Service.Rules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<IPostRepository,EfPostRepository>();
+builder.Services.AddScoped<PostBusinessRules>();
 builder.Services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon")));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
