@@ -20,8 +20,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(c => c.Email).HasColumnName("Email");
         builder.Property(c => c.Password).HasColumnName("Password");
 
-        builder.HasMany(x => x.Posts).WithOne(x => x.Author).HasForeignKey(x => x.AuthorId);
-        builder.HasMany(x => x.Comments);
+        builder.HasMany(x => x.Posts).WithOne(x => x.Author).HasForeignKey(X => X.AuthorId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(x => x.Comments).WithOne(x => x.User).HasForeignKey(X => X.UserId).OnDelete(DeleteBehavior.NoAction);
 
         builder.HasData(
             new User()

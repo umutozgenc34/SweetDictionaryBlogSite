@@ -14,13 +14,13 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         builder.Property(c => c.Id).HasColumnName("CommentId");
         builder.Property(c => c.CreatedTime).HasColumnName("CreatedTime");
         builder.Property(c => c.UpdatedTime).HasColumnName("UpdatedTime");
-        builder.Property(c=>c.Text).HasColumnName("Text");
-        builder.Property(c=>c.AuthorId).HasColumnName("AuthorId");
+        builder.Property(c => c.Text).HasColumnName("Text");
+        builder.Property(c => c.UserId).HasColumnName("UserId");
         builder.Property(c => c.PostId).HasColumnName("PostId");
 
-        builder.HasOne(x => x.Author).WithMany(x=> x.Comments).HasForeignKey(x=> x.AuthorId);
-        builder.HasOne(x => x.Post).WithMany(x=> x.Comments).HasForeignKey(x=> x.PostId);
-            
+        builder.HasOne(x => x.User).WithMany(x => x.Comments).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(x => x.Post).WithMany(c => c.Comments).HasForeignKey(c => c.PostId).OnDelete(DeleteBehavior.NoAction);
+
 
     }
 }
