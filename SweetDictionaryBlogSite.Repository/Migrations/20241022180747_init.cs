@@ -106,7 +106,7 @@ namespace SweetDictionaryBlogSite.Repository.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "CreatedTime", "Email", "FirstName", "LastName", "Password", "UpdatedTime", "Username" },
-                values: new object[] { 1L, new DateTime(2024, 10, 18, 10, 37, 52, 466, DateTimeKind.Local).AddTicks(5194), "umut@gmail.com", "Umut", "Ozgenc", "12321321321", null, "umutozgenc34" });
+                values: new object[] { 1L, new DateTime(2024, 10, 22, 21, 7, 47, 91, DateTimeKind.Local).AddTicks(7160), "umut@gmail.com", "Umut", "Ozgenc", "12321321321", null, "umutozgenc34" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",

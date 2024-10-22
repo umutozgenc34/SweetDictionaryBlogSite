@@ -186,7 +186,7 @@ namespace SweetDictionaryBlogSite.Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2024, 10, 18, 10, 37, 52, 466, DateTimeKind.Local).AddTicks(5194),
+                            CreatedTime = new DateTime(2024, 10, 22, 21, 7, 47, 91, DateTimeKind.Local).AddTicks(7160),
                             Email = "umut@gmail.com",
                             FirstName = "Umut",
                             LastName = "Ozgenc",

@@ -2,6 +2,7 @@
 
 using Core.Exceptions;
 using SweetDictionaryBlogSite.Repository.Repositories.Abstracts;
+using SweetDictionaryBlogSite.Service.Constants;
 
 namespace SweetDictionaryBlogSite.Service.Rules;
 
@@ -12,7 +13,7 @@ public class PostBusinessRules(IPostRepository _postRepository)
         var post = _postRepository.GetById(id);
         if (post is null)
         {
-            throw new NotFoundException($"İlgili Id ye göre post bulunamadı : {id}");
+            throw new NotFoundException(Messages.PostIsNotPresentMessage(id));
         }
     }
 }

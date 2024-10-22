@@ -7,6 +7,7 @@ using SweetDictionaryBlogSite.Models.Entities;
 using SweetDictionaryBlogSite.Models.Posts;
 using SweetDictionaryBlogSite.Repository.Repositories.Abstracts;
 using SweetDictionaryBlogSite.Service.Abstracts;
+using SweetDictionaryBlogSite.Service.Constants;
 using SweetDictionaryBlogSite.Service.Rules;
 
 namespace SweetDictionaryBlogSite.Service.Concretes;
@@ -51,7 +52,7 @@ public sealed class PostService : IPostService
         return new ReturnModel<string>
         {
             Data = $"Post Başlığı : {deletedPost.Title}",
-            Message = "Post silindi",
+            Message = Messages.PostDeletedMessage,
             Status = 204,
             Success = true
         };
@@ -74,38 +75,36 @@ public sealed class PostService : IPostService
 
     public ReturnModel<List<PostResponseDto>> GetAllByAuthorId(long authorId)
     {
-        List<Post> posts = _postRepository.GetAllByAuthorId(authorId);
+        List<Post> posts = _postRepository.GetAll(p => p.AuthorId == authorId);
         List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
 
         return new ReturnModel<List<PostResponseDto>>
         {
             Data = responses,
-            Message = $"Yazar Idsine göre Postlar Listelendi : Yazar Id: {authorId}",
+            Message = $"Yazar Id sine göre Postlar listelendi : Yazar Id: {authorId}",
             Status = 200,
             Success = true
         };
+
     }
 
-    public ReturnModel<List<PostResponseDto>> GetAllByCategoryId(int categoryId)
+    public ReturnModel<List<PostResponseDto>> GetAllByCategoryId(int id)
     {
-        List<Post> posts = _postRepository.GetAllByCategoryId(categoryId);
+        List<Post> posts = _postRepository.GetAll(x => x.CategoryId == id);
         List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
-
         return new ReturnModel<List<PostResponseDto>>
         {
             Data = responses,
-            Message = $"CategoryIdsine göre Postlar Listelendi : Yazar Id: {categoryId}",
+            Message = $"Kategori Id sine göre Postlar listelendi : Kategori Id: {id}",
             Status = 200,
             Success = true
         };
-
     }
 
     public ReturnModel<List<PostResponseDto>> GetAllByTitleContains(string text)
     {
-        List<Post> posts = _postRepository.GetAllByTitleContains(text);
-        List<PostResponseDto> responses = _mapper.Map<List<PostResponseDto>>(posts);
-
+        var posts = _postRepository.GetAll(x => x.Title.Contains(text));
+        var responses = _mapper.Map<List<PostResponseDto>>(posts);
         return new ReturnModel<List<PostResponseDto>>
         {
             Data = responses,
@@ -114,6 +113,7 @@ public sealed class PostService : IPostService
             Success = true
         };
     }
+
 
     public ReturnModel<PostResponseDto> GetById(Guid id)
     {
@@ -145,14 +145,20 @@ public sealed class PostService : IPostService
         try
         {
             _businessRules.PostIsPresent(dto.Id);
-            Post post = _mapper.Map<Post>(dto);
-            Post updatedPost = _postRepository.Update(post);
 
-            PostResponseDto response = _mapper.Map<PostResponseDto>(updatedPost);
+            Post post = _postRepository.GetById(dto.Id);
+
+            post.Title = dto.Title;
+            post.Content = dto.Content;
+
+            _postRepository.Update(post);
+
+            PostResponseDto response = _mapper.Map<PostResponseDto>(post);
+
             return new ReturnModel<PostResponseDto>
             {
                 Data = response,
-                Message = "Post Güncellendi",
+                Message = Messages.PostUpdatedMessage,
                 Status = 200,
                 Success = true
             };
@@ -161,10 +167,13 @@ public sealed class PostService : IPostService
         catch (Exception ex)
         {
             return ExceptionHandler<PostResponseDto>.HandleException(ex);
-            
         }
-       
+
+
+
     }
+
+
 
 
 }
