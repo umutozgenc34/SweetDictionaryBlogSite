@@ -8,6 +8,7 @@ using SweetDictionaryBlogSite.Service.Abstracts;
 using SweetDictionaryBlogSite.Service.Concretes;
 using SweetDictionaryBlogSite.Service.Mappings;
 using SweetDictionaryBlogSite.Service.Rules;
+using SweetDictionaryBlogSite.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<PostBusinessRules>();
 builder.Services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon")));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddIdentity<User,IdentityRole>(opt =>
 {
@@ -48,6 +51,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseExceptionHandler(_ => { });
 app.MapControllers();
 
 app.Run();
